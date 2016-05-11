@@ -1,10 +1,15 @@
 #copy-node-modules - fast deploy Node.js modules to distination folder
 Copy all modules listed in 'dependencies' or 'devDependencies' field of package.json to destination folder. 
-It reads package.json from source directoy and copy all modules and those dependencies in 'dependencies' or 'devDependencies' field to destination directory.
 
-The modern applications use lots of modules, each module depends on more modules, results hundreds of modules need to be installed when typing `npm install`.
+The procedure:
 
-It will save you a bunch of time to deploy stand-alone application, and no need to fetch all modules from remote repository.
+1. Read package.json from source directoy, and read 'dependencies' or 'devDependencies' field.
+2. Search existed modules in source directory, and search all dependencies.
+3. Copy all modules to destination directory.
+
+The modern applications use lots of modules, each module depends on more modules, results hundreds of modules need to be installed when typing `npm install`. When you want to pack/deploy your application to a folder which contains all needed modules, this module will help you to save time from slow `npm install`
+
+It will save you a bunch of time to deploy stand-alone application from existed development directory, no need to fetch all modules from remote repository.
 
 ## Installation
     npm install copy-node-modules --save-dev
