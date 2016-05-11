@@ -1,0 +1,38 @@
+{
+  "name": "copy-node-modules",
+  "version": "0.3.1",
+  "description": "Copy node modules listed in 'dependencies' or 'devDependencies' field of package.json to destination folder",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/arloliu/copy-node-modules"
+  },
+  "bin": {
+    "copy-node-modules": "./bin/copy-node-modules.js"
+  },
+  "scripts": {
+    "test": "eslint ./index.js"
+  },
+  "keywords": [
+    "install",
+    "deployment",
+    "package"
+  ],
+  "engine": {
+    "node": ">=0.12"
+  },
+  "author": "Arlo Liu <arlo.liu@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "async": "^2.0.0-rc.4",
+    "jsonfile": "^2.3.0",
+    "lodash": "^4.12.0",
+    "mkdirp": "^0.5.1",
+    "ncp": "^2.0.0",
+    "semver": "^5.1.0"
+  },
+  "devDependencies": {
+    "eslint": "^2.9.0",
+    "eslint-plugin-node": "^1.2.1"
+  }
+}
