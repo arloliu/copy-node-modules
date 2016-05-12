@@ -14,15 +14,15 @@ It will save you a bunch of time to deploy stand-alone application from existed 
 ## Installation
     npm install copy-node-modules --save-dev
 
-## Programmatic usage
+## Programmatic Usage
 ```javascript
 var copyNodeModule = require('copy-node-modules');
 ```
 #### copyNodeModules(srcDir, dstDir, [options], callback)
 * `srcDir`: source directory contains package.json file.
 * `dstDir`: destination directory to copy modules, the modules will copy to `dstDir/node_modules` directory.
-* `options`:  
-  `devDependencies`: Boolean value, defaults to **false**, also copy development modules is set this to **true**
+* `options`:
+  `devDependencies`: Boolean value, defaults to **false**, also copy development modules when it sets to **true**
 * `callback(err, results)`: A callback which is called when all copy tasks have finished or error occurs, `results` is an array contains copied modules, each item is an object as `{name: 'xxx', version: 'xxx'}`
 
 ## Examples
@@ -40,6 +40,13 @@ copyNodeModule(srcDir, dstDir, {devDependencies: false}, function(err, results) 
   }
 });
 ```
+
+## CLI Usage
+    Usage: Usage: copy-node-module src_dir dest_dir [--dev] [-v|--verbose]
+* `src_dir`: source directory contains package.json file.
+* `dstDir`: destination directory to copy modules, the modules will copy to `dstDir/node_modules` directory.
+* `--dev`: also copy modules listed in `devDependencies` field.
+* `-v|--verbose`: verbose mode.
 
 ## License
 MIT
