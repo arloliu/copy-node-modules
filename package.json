@@ -1,6 +1,6 @@
 {
   "name": "copy-node-modules",
-  "version": "0.3.1",
+  "version": "0.4.1",
   "description": "Copy node modules listed in 'dependencies' or 'devDependencies' field of package.json to destination folder",
   "main": "index.js",
   "repository": {
