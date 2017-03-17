@@ -6,7 +6,8 @@ var jsonfile = require('jsonfile');
 var semver = require('semver')
 var async = require('async');
 var ncp = require('ncp').ncp;
-var _ = require('lodash');
+var uniqWith = require('lodash.uniqwith');
+var flatten = require('lodash.flatten');
 var g_opts = {};
 
 function isDirExists(directory)
@@ -173,7 +174,7 @@ function copyNodeModules(srcDir, dstDir, opts, callback)
                 }
             }
 
-            var allPkgList = _.uniqWith(_.flatten(results), function(a, b) {
+            var allPkgList = uniqWith(flatten(results), function(a, b) {
                 if (a.name === b.name && a.version === b.version)
                     return true;
                 return false;

@@ -26,6 +26,7 @@
   "dependencies": {
     "async": "^2.0.0-rc.4",
     "jsonfile": "^2.3.0",
+    "lodash.flatten": "^4.4.0",
     "lodash.uniqwith": "^4.5.0",
     "mkdirp": "^0.5.1",
     "ncp": "^2.0.0",
