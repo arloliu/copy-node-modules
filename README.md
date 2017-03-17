@@ -1,4 +1,4 @@
-#copy-node-modules - fast deploy Node.js modules to distination folder
+# copy-node-modules - fast deploy Node.js modules to distination folder
 Copy all modules listed in 'dependencies' or 'devDependencies' field of package.json to destination folder. 
 
 The procedure:
@@ -44,7 +44,7 @@ copyNodeModule(srcDir, dstDir, {devDependencies: false}, function(err, results) 
 ## CLI Usage
     Usage: Usage: copy-node-modules src_dir dest_dir [--dev] [-v|--verbose]
 * `src_dir`: source directory contains package.json file.
-* `dstDir`: destination directory to copy modules, the modules will copy to `dstDir/node_modules` directory.
+* `dest_dir`: destination directory to copy modules, the modules will copy to `dstDir/node_modules` directory.
 * `--dev`: also copy modules listed in `devDependencies` field.
 * `-v|--verbose`: verbose mode.
 
