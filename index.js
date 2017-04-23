@@ -3,7 +3,7 @@ var path = require('path');
 var fs = require('fs');
 var mkdirp = require('mkdirp');
 var jsonfile = require('jsonfile');
-var semver = require('semver')
+var semver = require('semver');
 var async = require('async');
 var ncp = require('ncp').ncp;
 var uniqWith = require('lodash.uniqwith');
@@ -115,6 +115,7 @@ function copyModules(pkgContent, callback)
     var srcDir = path.resolve(g_opts.srcDir, './node_modules/' + pkg);
     var dstDir = path.resolve(g_opts.dstDir, './node_modules/' + pkg);
     var opts = {clobber: false};
+    mkdirp.sync(dstDir);
     ncp(srcDir, dstDir, opts, function(err) {
         callback(err);
     });
