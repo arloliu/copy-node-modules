@@ -136,7 +136,7 @@ function copyNodeModules(srcDir, dstDir, opts, callback)
     else
     {
         g_opts = opts || {};
-        g_opts.srcDir = srcDir;
+        g_opts.srcDir = g_opts.srcDir || srcDir;
         g_opts.dstDir = dstDir;
     }
 
