@@ -150,13 +150,20 @@ function copyNodeModules(srcDir, dstDir, opts, callback)
 
     // prepare root package list
     var rootPkgList = [];
-    for (var depPkgName in pkgContent.dependencies)
-        rootPkgList.push({name: depPkgName, version: pkgContent.dependencies[depPkgName]});
+    for (var depPkgName in pkgContent.dependencies) {
+        var version = pkgContent.dependencies[depPkgName]
+        if (!version.startsWith('file:')) {
+            rootPkgList.push({ name: depPkgName, version });
+        }
+    }
 
-    if (g_opts.devDependencies)
-    {
-        for (var devDepPkgName in pkgContent.devDependencies)
-            rootPkgList.push({name: devDepPkgName, version: pkgContent.dependencies[devDepPkgName]});
+    if (g_opts.devDependencies) {
+        for (var devDepPkgName in pkgContent.devDependencies) {
+            var version = pkgContent.dependencies[depPkgName]
+        }
+        if (!version.startsWith('file:')) {
+            rootPkgList.push({ name: devDepPkgName, version });
+        }
     }
 
     async.map(rootPkgList, findPkgDeps, function(err, results) {
