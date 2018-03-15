@@ -93,7 +93,7 @@ function addPkgDeps(baseDir, pkg, pkgs, callback)
     for (var pkgName in pkgContent.dependencies)
     {
         var version = pkgContent.dependencies[pkgName];
-        if ( !version.startsWith('file:') {
+        if ( !version.startsWith('file:') ) {
             var depPkg = {name: pkgName, version: version};
             addPkgDeps(g_opts.srcDir, depPkg, pkgs, callback);
             addPkgDeps(pkgDir, depPkg, pkgs, callback);
