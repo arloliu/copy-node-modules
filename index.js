@@ -1,6 +1,6 @@
 'use strict';
 var path = require('path');
-var fs = require('fs');
+var fs = require('graceful-fs');
 var mkdirp = require('mkdirp');
 var jsonfile = require('jsonfile');
 var semver = require('semver');
