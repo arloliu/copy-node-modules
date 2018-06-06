@@ -1,6 +1,6 @@
 'use strict';
 var path = require('path');
-var fs = require('fs');
+var fs = require('graceful-fs');
 var mkdirp = require('mkdirp');
 var jsonfile = require('jsonfile');
 var semver = require('semver');
@@ -99,8 +99,6 @@ function addPkgDeps(baseDir, pkg, pkgs, callback)
             addPkgDeps(pkgDir, depPkg, pkgs, callback);
         }
     }
-
-
 }
 
 function findPkgDeps(pkg, callback)
@@ -109,7 +107,6 @@ function findPkgDeps(pkg, callback)
     addPkgDeps(g_opts.srcDir, pkg, pkgs, callback);
     callback(null, pkgs);
 }
-
 
 function copyModules(pkgContent, callback)
 {
@@ -123,6 +120,14 @@ function copyModules(pkgContent, callback)
     });
 }
 
+/**
+ * @param {String} srcDir
+ * @param {String} dstDir
+ * @param {Object} [opts]
+ * @param {Boolean} [opts.devDependencies=false]
+ * @param {Number} [opts.concurrency]
+ * @param {Function} callback
+ */
 function copyNodeModules(srcDir, dstDir, opts, callback)
 {
     if (!srcDir)
@@ -190,10 +195,25 @@ function copyNodeModules(srcDir, dstDir, opts, callback)
                 return false;
             });
 
-            async.each(allPkgList, copyModules, function(err) {
-                callback(err, allPkgList);
-            });
+            if (g_opts.concurrency) {
+                var queue = async.queue(copyModules, g_opts.concurrency);
+                queue.drain = function() {
+                    callback(null, allPkgList);
+                };
+                queue.push(allPkgList, function(err) {
+                    if (err) {
+                        queue.kill();
+                        callback(err, allPkgList);
+                    }
+                });
+            }
+            else {
+                async.each(allPkgList, copyModules, function(err) {
+                    callback(err, allPkgList);
+                });
+            }
         });
     });
 }
+
 module.exports = copyNodeModules;
