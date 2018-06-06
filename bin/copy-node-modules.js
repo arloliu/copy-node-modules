@@ -9,20 +9,23 @@ yargs
     .strict(true)
     .command('$0 <srcDir> <dstDir>', 'Copy node modules', yargs => {
         return yargs
-            .option('dev', {
+            .option('d', {
                 describe: 'Include dev dependencies',
                 type: 'boolean'
             })
-            .option('concurrency', {
+            .option('c', {
                 describe: 'Root packages\' copying concurrency',
                 type: 'number'
             })
-            .option('verbose', {
+            .option('v', {
                 describe: 'Verbose output',
                 type: 'boolean'
             })
-            .default('dev', false)
-            .default('verbose', false)
+            .default('d', false)
+            .default('v', false)
+            .alias('d', 'dev')
+            .alias('v', 'verbose')
+            .alias('c', 'concurrency')
     }, args => {
         var srcDir = args.srcDir,
             dstDir = args.dstDir;
@@ -53,5 +56,5 @@ yargs
         });
     })
     .help()
-    .version()
+    .version('version')
     .parse();
