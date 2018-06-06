@@ -1,43 +1,57 @@
 #!/usr/bin/env node
 var path = require('path');
+var yargs = require('yargs');
 var copyNodeModules = require('../');
-var args = process.argv.slice(2);
 
-if (args.length < 2)
-{
-    console.error('Usage: copy-node-module src_dir dest_dir [--dev] [-v|--verbose] ');
-    process.exit(1);
-}
+yargs
+    .wrap(null)
+    .usage('Usage: $0 <command> [options]')
+    .strict(true)
+    .command('$0 <srcDir> <dstDir>', 'Copy node modules', yargs => {
+        return yargs
+            .option('dev', {
+                describe: 'Include dev dependencies',
+                type: 'boolean'
+            })
+            .option('concurrency', {
+                describe: 'Root packages\' copying concurrency',
+                type: 'number'
+            })
+            .option('verbose', {
+                describe: 'Verbose output',
+                type: 'boolean'
+            })
+            .default('dev', false)
+            .default('verbose', false)
+    }, args => {
+        var srcDir = args.srcDir,
+            dstDir = args.dstDir;
 
-var srcDir = args[0].trim(),
-    dstDir = args[1].trim(),
-    devDeps = false,
-    verbose = false;
+        if (!path.isAbsolute(srcDir))
+            srcDir = path.resolve(process.cwd(), srcDir);
+        if (!path.isAbsolute(srcDir))
+            dstDir = path.resolve(process.cwd(), dstDir);
 
-// parse input arguments
-if (args.indexOf('--dev') !== -1)
-    devDeps = true;
-if (args.indexOf('-v') !== -1 || args.indexOf('--verbose') !== -1)
-    verbose = true;
+        var options = { devDependencies: args.dev };
+        if (args.concurrency) {
+            options.concurrency = args.concurrency;
+        }
 
-if (!path.isAbsolute(srcDir))
-    srcDir = path.resolve(process.cwd(), srcDir);
-if (!path.isAbsolute(srcDir))
-    dstDir = path.resolve(process.cwd(), dstDir);
+        copyNodeModules(srcDir, dstDir, options, function(err, packages) {
+            if (err) {
+                console.error('Error: ' + err);
+                process.exit(1);
+            }
 
-
-var options = {devDependencies: devDeps};
-copyNodeModules(srcDir, dstDir, options, function(err, packages) {
-    if (err)
-    {
-        console.error('Error:' + err);
-        process.exit(1);
-    }
-    if (verbose)
-    {
-        console.log('Module List:');
-        for (var i in packages)
-            console.log(' * ' + packages[i].name);
-        console.log('Total: ' + packages.length + ' modules.');
-    }
-});
+            if (args.verbose) {
+                console.log('Module List:');
+                for (var i in packages) {
+                    console.log(' * ' + packages[i].name);
+                }
+                console.log('Total: ' + packages.length + ' modules.');
+            }
+        });
+    })
+    .help()
+    .version()
+    .parse();

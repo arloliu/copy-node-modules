@@ -99,8 +99,6 @@ function addPkgDeps(baseDir, pkg, pkgs, callback)
             addPkgDeps(pkgDir, depPkg, pkgs, callback);
         }
     }
-
-
 }
 
 function findPkgDeps(pkg, callback)
@@ -109,7 +107,6 @@ function findPkgDeps(pkg, callback)
     addPkgDeps(g_opts.srcDir, pkg, pkgs, callback);
     callback(null, pkgs);
 }
-
 
 function copyModules(pkgContent, callback)
 {
@@ -123,6 +120,14 @@ function copyModules(pkgContent, callback)
     });
 }
 
+/**
+ * @param {String} srcDir
+ * @param {String} dstDir
+ * @param {Object} [opts]
+ * @param {Object} [opts.devDependencies=false]
+ * @param {Object} [opts.concurrency=false]
+ * @param {Function} callback
+ */
 function copyNodeModules(srcDir, dstDir, opts, callback)
 {
     if (!srcDir)
@@ -132,7 +137,7 @@ function copyNodeModules(srcDir, dstDir, opts, callback)
 
     if (!callback)
     {
-        g_opts = {srcDir: srcDir, dstDir: dstDir, devDependencies: false};
+        g_opts = {srcDir: srcDir, dstDir: dstDir, devDependencies: false, concurrency: false};
         callback = opts;
     }
     else
@@ -190,10 +195,25 @@ function copyNodeModules(srcDir, dstDir, opts, callback)
                 return false;
             });
 
-            async.each(allPkgList, copyModules, function(err) {
-                callback(err, allPkgList);
-            });
+            if (g_opts.concurrency) {
+                var queue = async.queue(copyModules, g_opts.concurrency);
+                queue.drain = function() {
+                    callback(null, allPkgList);
+                };
+                queue.push(allPkgList, function(err) {
+                    if (err) {
+                        queue.kill();
+                        callback(err, allPkgList);
+                    }
+                });
+            }
+            else {
+                async.each(allPkgList, copyModules, function(err) {
+                    callback(err, allPkgList);
+                });
+            }
         });
     });
 }
+
 module.exports = copyNodeModules;
