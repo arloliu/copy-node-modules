@@ -92,6 +92,9 @@ function addPkgDeps(baseDir, pkg, pkgs, callback)
 
     for (var pkgName in pkgContent.dependencies)
     {
+        if (!pkgContent.dependencies.hasOwnProperty(pkgName)) {
+            continue;
+        }
         var version = pkgContent.dependencies[pkgName];
         if ( !version.startsWith('file:') ) {
             var depPkg = {name: pkgName, version: version};
@@ -152,22 +155,28 @@ function copyNodeModules(srcDir, dstDir, opts, callback)
     if (!pkgContent)
         throw new Error('parse package.json in source directory fail');
 
-
     // prepare root package list
+    var version;
     var rootPkgList = [];
     for (var depPkgName in pkgContent.dependencies) {
-        var version = pkgContent.dependencies[depPkgName]
+        if (!pkgContent.dependencies.hasOwnProperty(depPkgName)) {
+            continue;
+        }
+        version = pkgContent.dependencies[depPkgName];
         if (!version.startsWith('file:')) {
-            rootPkgList.push({ name: depPkgName, version });
+            rootPkgList.push({ name: depPkgName, version: version });
         }
     }
 
     if (g_opts.devDependencies) {
         for (var devDepPkgName in pkgContent.devDependencies) {
-            var version = pkgContent.dependencies[depPkgName]
-        }
-        if (!version.startsWith('file:')) {
-            rootPkgList.push({ name: devDepPkgName, version });
+            if (!pkgContent.devDependencies.hasOwnProperty(devDepPkgName)) {
+                continue;
+            }
+            version = pkgContent.devDependencies[devDepPkgName];
+            if (!version.startsWith('file:')) {
+                rootPkgList.push({ name: devDepPkgName, version: version });
+            }
         }
     }
 
