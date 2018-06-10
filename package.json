@@ -1,7 +1,7 @@
 {
   "name": "copy-node-modules",
   "version": "1.0.5",
-  "description": "Copy node modules listed in 'dependencies' or 'devDependencies' field of package.json to destination folder",
+  "description": "Fast Node.js modules deployment to destination directory",
   "main": "index.js",
   "repository": {
     "type": "git",

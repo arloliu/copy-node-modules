@@ -1,16 +1,16 @@
-# copy-node-modules - fast deploy Node.js modules to distination folder
+# copy-node-modules - fast Node.js modules deployment to destination directory
 
-Copy all modules listed in `dependencies` or `devDependencies` field of `package.json` to destination folder. 
+Copy all modules listed in `dependencies` or/and `devDependencies` field of `package.json` to destination directory. 
 
 The procedure:
 
-1. Read `package.json` from source directoy, and read `dependencies` or `devDependencies` field.
-2. Search existed modules in source directory, and search all dependencies.
+1. Read `package.json` from source directory and read `dependencies` or `devDependencies` field.
+2. Search for existing modules and ther dependencies in source directory.
 3. Copy all modules to destination directory.
 
-The modern applications use lots of modules, each module depends on more modules, results hundreds of modules need to be installed when typing `npm install`. When you want to pack/deploy your application to a folder which contains all needed modules, this module will help you to save time from slow `npm install`
+Modern applications use lots of modules, each module depends on more modules resulting in hundreds of modules being installed when typing `npm install`. This module will help you to save time from slow `npm install` when you want to pack/deploy your application to a directory which contains all needed modules. 
 
-It will save you a bunch of time to deploy stand-alone application from existed development directory, no need to fetch all modules from remote repository.
+It will save you a bunch of time to deploy a stand-alone application from existing development directory, no need to fetch all modules from remote repository.
 
 ## Installation
 
@@ -26,11 +26,11 @@ var copyNodeModules = require('copy-node-modules');
 
 #### copyNodeModules(srcDir, dstDir, [options], callback)
 
-* `srcDir`: source directory contains package.json file.
-* `dstDir`: destination directory to copy modules, the modules will copy to `dstDir/node_modules` directory.
+* `srcDir`: source directory containing `package.json` file.
+* `dstDir`: destination directory to copy modules to (modules will be copied to `dstDir/node_modules` directory).
 * `options`:
 
-  - `devDependencies`: boolean value, defaults to **false**, copies development modules when it's set to **true**.
+  - `devDependencies`: boolean value, defaults to **false**, showing whether modules in `devDependencies` field of `package.json` should also be copied (when it's set to **true**).
   - `concurrency`: integer value, max number of root packages whose files are being copied concurrently.
   
 * `callback(err, results)`: A callback which is called when all copy tasks have finished or error occurs, `results` is an array contains copied modules, each item is an object as `{name: 'xxx', version: 'xxx'}`
@@ -41,13 +41,13 @@ var copyNodeModules = require('copy-node-modules');
 var copyNodeModule = require('copy-node-modules');
 var srcDir = '/somewhere/project';
 var dstDir = '/somewhere/project/dist';
-copyNodeModule(srcDir, dstDir, {devDependencies: false}, function(err, results) {
+copyNodeModule(srcDir, dstDir, { devDependencies: false }, function(err, results) {
   if (err) {
     console.error(err);
     return;
   }
   for (var i in results) {
-    console.log('package name:' + results[i].name + ' version:' + results[i].version);
+    console.log('package name: ' + results[i].name + ', version: ' + results[i].version);
   }
 });
 ```
@@ -59,7 +59,7 @@ copy-node-modules src_dir dest_dir [-d|--dev] [-c|--concurrency] [-v|--verbose]
 ```
 
 * `src_dir`: source directory containing `package.json` file.
-* `dest_dir`: destination directory to copy modules to (the modules will copied to `dist_dir/node_modules` directory).
+* `dest_dir`: destination directory to copy modules to (modules will be copied to `dest_dir/node_modules` directory).
 * `-d|--dev`: whether modules in `devDependencies` field of `package.json` should be also copied.
 * `-c|--concurrency`: max number of root packages whose files are being copied concurrently.
 * `-v|--verbose`: verbose mode.
