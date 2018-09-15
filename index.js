@@ -133,6 +133,7 @@ function copyModules(pkgContent, callback)
  * @param {Object} [opts]
  * @param {Boolean} [opts.devDependencies=false]
  * @param {Number} [opts.concurrency]
+ * @param {string} [opts.filter]
  * @param {Function} callback
  */
 function copyNodeModules(srcDir, dstDir, opts, callback)
@@ -144,7 +145,7 @@ function copyNodeModules(srcDir, dstDir, opts, callback)
 
     if (!callback)
     {
-        g_opts = {srcDir: srcDir, dstDir: dstDir, devDependencies: false, filter: null};
+        g_opts = {srcDir: srcDir, dstDir: dstDir, devDependencies: false};
         callback = opts;
     }
     else
