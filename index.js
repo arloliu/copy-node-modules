@@ -116,7 +116,11 @@ function copyModules(pkgContent, callback)
     var pkg = pkgContent.name;
     var srcDir = path.resolve(g_opts.srcDir, './node_modules/' + pkg);
     var dstDir = path.resolve(g_opts.dstDir, './node_modules/' + pkg);
-    var opts = {clobber: false, dereference: true};
+
+    var filter = g_opts.filter;
+
+    var opts = {clobber: false, dereference: true, filter: filter};
+
     mkdirp.sync(dstDir);
     ncp(srcDir, dstDir, opts, function(err) {
         callback(err);
@@ -129,6 +133,7 @@ function copyModules(pkgContent, callback)
  * @param {Object} [opts]
  * @param {Boolean} [opts.devDependencies=false]
  * @param {Number} [opts.concurrency]
+ * @param {string} [opts.filter]
  * @param {Function} callback
  */
 function copyNodeModules(srcDir, dstDir, opts, callback)

@@ -21,11 +21,16 @@ yargs
                 describe: 'Verbose output',
                 type: 'boolean'
             })
+            .option('f', {
+                describe: 'Regular Expression, on match copy',
+                type: 'string'
+            })
             .default('d', false)
             .default('v', false)
             .alias('d', 'dev')
             .alias('v', 'verbose')
             .alias('c', 'concurrency')
+            .alias('f', 'filter')
     }, args => {
         var srcDir = args.srcDir,
             dstDir = args.dstDir;
@@ -40,6 +45,15 @@ yargs
             options.concurrency = args.concurrency;
         }
 
+        if (args.filter) {
+            try {
+                options.filter = new RegExp(args.filter, "g");
+            } catch (ex) {
+                console.error(ex.message);
+                process.exit(1);
+            }
+        }
+        
         copyNodeModules(srcDir, dstDir, options, function(err, packages) {
             if (err) {
                 console.error('Error: ' + err);

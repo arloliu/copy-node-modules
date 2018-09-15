@@ -32,6 +32,7 @@ var copyNodeModules = require('copy-node-modules');
 
   - `devDependencies`: boolean value, defaults to **false**, showing whether modules in `devDependencies` field of `package.json` should also be copied (when it's set to **true**).
   - `concurrency`: integer value, max number of root packages whose files are being copied concurrently.
+  - `filter`: A `RegExp` OR a `method` that accepts one value (the full path) and returns a boolean (copy on true).
   
 * `callback(err, results)`: A callback which is called when all copy tasks have finished or error occurs, `results` is an array contains copied modules, each item is an object as `{name: 'xxx', version: 'xxx'}`
 
@@ -52,10 +53,36 @@ copyNodeModule(srcDir, dstDir, { devDependencies: false }, function(err, results
 });
 ```
 
+### Example with a filter method
+
+```javascript
+var copyNodeModule = require('copy-node-modules');
+var srcDir = '/somewhere/project';
+var dstDir = '/somewhere/project/dist';
+
+// Filter method that will ignore node_module folders in a node module.
+var filter = (path) => {
+  let index = v.indexOf("node_modules");
+  let secondIndex = v.indexOf("node_modules", index + 1);
+
+  return (secondIndex == -1);
+}
+
+copyNodeModule(srcDir, dstDir, { devDependencies: false filter: filter}, function(err, results) {
+  if (err) {
+    console.error(err);
+    return;
+  }
+  for (var i in results) {
+    console.log('package name: ' + results[i].name + ', version: ' + results[i].version);
+  }
+});
+```
+
 ## CLI Usage
 
 ```
-copy-node-modules src_dir dest_dir [-d|--dev] [-c|--concurrency] [-v|--verbose]
+copy-node-modules src_dir dest_dir [-d|--dev] [-c|--concurrency] [-v|--verbose] [-f|--filter]
 ```
 
 * `src_dir`: source directory containing `package.json` file.
@@ -63,6 +90,7 @@ copy-node-modules src_dir dest_dir [-d|--dev] [-c|--concurrency] [-v|--verbose]
 * `-d|--dev`: whether modules in `devDependencies` field of `package.json` should be also copied.
 * `-c|--concurrency`: max number of root packages whose files are being copied concurrently.
 * `-v|--verbose`: verbose mode.
+* `-f|--filter`: A Regular Expression, files that match this expression will be copied. It also matches directories fi. `-f index.html` matches `path/index.html` but not `path/` and because of this `index.html` is not copied.
 
 ## License
 
