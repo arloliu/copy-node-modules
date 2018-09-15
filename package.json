@@ -1,6 +1,6 @@
 {
   "name": "copy-node-modules",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Fast Node.js modules deployment to destination directory",
   "main": "index.js",
   "repository": {
