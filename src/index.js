@@ -1,12 +1,13 @@
 import path from 'path';
 import fs from 'graceful-fs';
-import mkdirp from 'mkdirp';
-import jsonfile from 'jsonfile';
-import semver from 'semver';
-import async from 'async';
+
 import ncp from 'ncp';
-import uniqWith from 'lodash.uniqwith';
+import async from 'async';
+import semver from 'semver';
+import jsonfile from 'jsonfile';
+import mkdirp from 'mkdirp';
 import flatten from 'lodash.flatten';
+import uniqWith from 'lodash.uniqwith';
 
 let gOpts = {};
 

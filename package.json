@@ -12,6 +12,7 @@
     "build": "rimraf bin lib && npm run transpile && npm run es",
     "transpile": "babel src/index.js --out-dir lib && babel src/bin --out-dir bin",
     "es": "rollup --config rollup.config.es.js",
+    "watch:es": "node --require @babel/register rollup.watch.es.js",
     "lint": "eslint src",
     "test": "npm run lint",
     "prepublishOnly": "npm run test && npm run build"
@@ -49,6 +50,8 @@
     "@babel/plugin-syntax-dynamic-import": "^7.0.0",
     "@babel/plugin-syntax-import-meta": "^7.0.0",
     "@babel/preset-env": "^7.1.6",
+    "@babel/register": "^7.0.0",
+    "chokidar": "^2.0.4",
     "eslint": "^5.9.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.14.0",
