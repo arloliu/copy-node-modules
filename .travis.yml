@@ -1,0 +1,19 @@
+language: node_js
+node_js:
+- "11"
+- "10"
+- "9"
+- "8"
+- "7"
+- "6"
+branches:
+  only:
+  - master
+install:
+- yarn
+before_script:
+- yarn test
+script:
+- yarn build
+#after_success:
+#- yarn test:coveralls
