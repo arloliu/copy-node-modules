@@ -2,16 +2,23 @@
   "name": "copy-node-modules",
   "version": "1.0.8",
   "description": "Fast Node.js modules deployment to destination directory",
-  "main": "index.js",
+  "main": "lib/index.js",
+  "jsnext:main": "lib/index.es.js",
+  "module": "lib/index.es.js",
+  "bin": {
+    "copy-node-modules": "bin/copy-node-modules.js"
+  },
+  "scripts": {
+    "build": "rimraf bin lib && npm run transpile && npm run es",
+    "transpile": "babel src/index.js --out-dir lib && babel src/bin --out-dir bin",
+    "es": "rollup --config rollup.config.es.js",
+    "lint": "eslint src",
+    "test": "npm run lint",
+    "prepublishOnly": "npm run test && npm run build"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/arloliu/copy-node-modules"
-  },
-  "bin": {
-    "copy-node-modules": "./bin/copy-node-modules.js"
-  },
-  "scripts": {
-    "test": "eslint ./index.js"
   },
   "keywords": [
     "install",
@@ -19,23 +26,34 @@
     "package"
   ],
   "engine": {
-    "node": ">=0.12"
+    "node": ">=6.0.0"
   },
   "author": "Arlo Liu <arlo.liu@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "async": "^2.0.0-rc.4",
-    "graceful-fs": "^4.1.11",
-    "jsonfile": "^2.3.0",
+    "async": "^2.6.1",
+    "graceful-fs": "^4.1.15",
+    "jsonfile": "^5.0.0",
     "lodash.flatten": "^4.4.0",
     "lodash.uniqwith": "^4.5.0",
     "mkdirp": "^0.5.1",
     "ncp": "^2.0.0",
-    "semver": "^5.1.0",
-    "yargs": "^11.0.0"
+    "semver": "^5.6.0",
+    "yargs": "^12.0.5"
   },
   "devDependencies": {
-    "eslint": "^2.9.0",
-    "eslint-plugin-node": "^1.2.1"
+    "@babel/cli": "^7.1.5",
+    "@babel/core": "^7.1.6",
+    "@babel/plugin-proposal-class-properties": "^7.1.0",
+    "@babel/plugin-proposal-json-strings": "^7.0.0",
+    "@babel/plugin-syntax-dynamic-import": "^7.0.0",
+    "@babel/plugin-syntax-import-meta": "^7.0.0",
+    "@babel/preset-env": "^7.1.6",
+    "eslint": "^5.9.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "rimraf": "^2.6.2",
+    "rollup": "^0.67.3",
+    "rollup-plugin-babel": "^4.0.3"
   }
 }

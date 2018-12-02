@@ -20,11 +20,25 @@ npm install copy-node-modules --save-dev
 
 ## Programmatic Usage
 
+ES6+ environment:
+
 ```javascript
-var copyNodeModules = require('copy-node-modules');
+const index = require('copy-node-modules');
 ```
 
-#### copyNodeModules(srcDir, dstDir, [options], callback)
+ES6+ environment with `import` support:
+
+```javascript
+import index from 'copy-node-modules'; 
+```
+
+ES5
+
+```javascript
+var index = require('copy-node-modules');
+```
+
+### index(srcDir, dstDir, [options], callback)
 
 * `srcDir`: source directory containing `package.json` file.
 * `dstDir`: destination directory to copy modules to (modules will be copied to `dstDir/node_modules` directory).
@@ -32,50 +46,50 @@ var copyNodeModules = require('copy-node-modules');
 
   - `devDependencies`: boolean value, defaults to **false**, showing whether modules in `devDependencies` field of `package.json` should also be copied (when it's set to **true**).
   - `concurrency`: integer value, max number of root packages whose files are being copied concurrently.
-  - `filter`: A `RegExp` OR a `method` that accepts one value (the full path) and returns a boolean (copy on true).
+  - `filter`: `RegExp` or function that accepts one value (the full path) and returns a boolean (copy on true).
   
 * `callback(err, results)`: A callback which is called when all copy tasks have finished or error occurs, `results` is an array contains copied modules, each item is an object as `{name: 'xxx', version: 'xxx'}`
 
 ## Examples
 
 ```javascript
-var copyNodeModule = require('copy-node-modules');
-var srcDir = '/somewhere/project';
-var dstDir = '/somewhere/project/dist';
-copyNodeModule(srcDir, dstDir, { devDependencies: false }, function(err, results) {
+const index = require('copy-node-modules');
+const srcDir = '/somewhere/project';
+const dstDir = '/somewhere/project/dist';
+index(srcDir, dstDir, { devDependencies: false }, (err, results) => {
   if (err) {
     console.error(err);
     return;
   }
-  for (var i in results) {
-    console.log('package name: ' + results[i].name + ', version: ' + results[i].version);
-  }
+  Object.keys(results).forEach(name => {
+    const version = results[name];
+    console.log(`Package name: ${name}, version: ${version}`);
+  });
 });
 ```
 
 ### Example with a filter method
 
 ```javascript
-var copyNodeModule = require('copy-node-modules');
-var srcDir = '/somewhere/project';
-var dstDir = '/somewhere/project/dist';
+const index = require('copy-node-modules');
+const srcDir = '/somewhere/project';
+const dstDir = '/somewhere/project/dist';
 
-// Filter method that will ignore node_module folders in a node module.
-var filter = (path) => {
-  let index = v.indexOf("node_modules");
-  let secondIndex = v.indexOf("node_modules", index + 1);
-
-  return (secondIndex == -1);
+// Filter method that will ignore node_module folders in a node module
+const filter = path => {
+  const firstIndex = path.indexOf('node_modules');
+  return v.indexOf('node_modules', firstIndex + 1) === -1;
 }
 
-copyNodeModule(srcDir, dstDir, { devDependencies: false filter: filter}, function(err, results) {
+index(srcDir, dstDir, { devDependencies: false, filter }, (err, results) => {
   if (err) {
     console.error(err);
     return;
   }
-  for (var i in results) {
-    console.log('package name: ' + results[i].name + ', version: ' + results[i].version);
-  }
+  Object.keys(results).forEach(name => {
+      const version = results[name];
+      console.log(`Package name: ${name}, version: ${version}`);
+    });
 });
 ```
 

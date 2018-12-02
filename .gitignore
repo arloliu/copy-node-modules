@@ -1,2 +1,6 @@
 .idea
+bin
+dist
+lib
 node_modules
+*.log
