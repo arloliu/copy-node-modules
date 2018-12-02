@@ -14,7 +14,13 @@ It will save you a bunch of time to deploy a stand-alone application from existi
 
 ## Installation
 
+```bash
+yarn add copy-node-modules --dev
 ```
+
+or
+
+```bash
 npm install copy-node-modules --save-dev
 ```
 
@@ -104,7 +110,8 @@ copy-node-modules src_dir dest_dir [-d|--dev] [-c|--concurrency] [-v|--verbose] 
 * `-d|--dev`: whether modules in `devDependencies` field of `package.json` should be also copied.
 * `-c|--concurrency`: max number of root packages whose files are being copied concurrently.
 * `-v|--verbose`: verbose mode.
-* `-f|--filter`: A Regular Expression, files that match this expression will be copied. It also matches directories fi. `-f index.html` matches `path/index.html` but not `path/` and because of this `index.html` is not copied.
+* `-f|--filter`: regular Expression, files that match this expression will be copied; it also matches directories fi:
+    -f index.html` matches `path/index.html` but not `path/` and because of this `index.html` is not copied.
 
 ## License
 
