@@ -64,7 +64,7 @@ function addPkgDeps(baseDir, pkg, pkgs, callback) {
     subPkgs.forEach(name => addPkgDeps(pkgDir, { name, version: '*' }, pkgs, callback));
   }
 
-  Object.keys(pkgContent.dependencies).forEach((name) => {
+  Object.keys(pkgContent.dependencies || {}).forEach((name) => {
     const version = pkgContent.dependencies[name];
     if (!version.startsWith('file:')) {
       const depPkg = { name, version };
@@ -81,7 +81,7 @@ function findPkgDeps(pkg, callback) {
 }
 
 function copyModules(pkgContent, callback) {
-  const name = { pkgContent };
+  const { name } = pkgContent;
   const srcDir = path.resolve(gOpts.srcDir, `node_modules/${name}`);
   const dstDir = path.resolve(gOpts.dstDir, `node_modules/${name}`);
   const { filter } = gOpts;
@@ -148,11 +148,11 @@ function copyNodeModules(srcDir, dstDir, opts, callback) {
       return;
     }
 
-    const dstModuleDir = path.resolve(gOpts.dstDir, './node_modules');
+    const dstModuleDir = path.resolve(gOpts.dstDir, 'node_modules');
     fs.stat(dstModuleDir, (err, stat) => {
       if (err || !stat.isDirectory()) {
         if (!mkdirp.sync(dstModuleDir)) {
-          callback('Can not create destination node_modules directory');
+          callback('Can not create destination node_modules directory.');
           return;
         }
       }
