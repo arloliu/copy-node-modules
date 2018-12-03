@@ -29,22 +29,22 @@ npm install copy-node-modules --save-dev
 ES6+ environment:
 
 ```javascript
-const index = require('copy-node-modules');
+const copyNodeModules = require('copy-node-modules');
 ```
 
 ES6+ environment with `import` support:
 
 ```javascript
-import index from 'copy-node-modules'; 
+import copyNodeModules from 'copy-node-modules'; 
 ```
 
 ES5
 
 ```javascript
-var index = require('copy-node-modules');
+var copyNodeModules = require('copy-node-modules');
 ```
 
-### index(srcDir, dstDir, [options], callback)
+### copyNodeModules(srcDir, dstDir, [options], callback)
 
 * `srcDir`: source directory containing `package.json` file.
 * `dstDir`: destination directory to copy modules to (modules will be copied to `dstDir/node_modules` directory).
@@ -59,10 +59,10 @@ var index = require('copy-node-modules');
 ## Examples
 
 ```javascript
-const index = require('copy-node-modules');
+const copyNodeModules = require('copy-node-modules');
 const srcDir = '/somewhere/project';
 const dstDir = '/somewhere/project/dist';
-index(srcDir, dstDir, { devDependencies: false }, (err, results) => {
+copyNodeModules(srcDir, dstDir, { devDependencies: false }, (err, results) => {
   if (err) {
     console.error(err);
     return;
@@ -77,7 +77,7 @@ index(srcDir, dstDir, { devDependencies: false }, (err, results) => {
 ### Example with a filter method
 
 ```javascript
-const index = require('copy-node-modules');
+const copyNodeModules = require('copy-node-modules');
 const srcDir = '/somewhere/project';
 const dstDir = '/somewhere/project/dist';
 
@@ -87,7 +87,7 @@ const filter = path => {
   return v.indexOf('node_modules', firstIndex + 1) === -1;
 }
 
-index(srcDir, dstDir, { devDependencies: false, filter }, (err, results) => {
+copyNodeModules(srcDir, dstDir, { devDependencies: false, filter }, (err, results) => {
   if (err) {
     console.error(err);
     return;
@@ -111,7 +111,7 @@ copy-node-modules src_dir dest_dir [-d|--dev] [-c|--concurrency] [-v|--verbose] 
 * `-c|--concurrency`: max number of root packages whose files are being copied concurrently.
 * `-v|--verbose`: verbose mode.
 * `-f|--filter`: regular Expression, files that match this expression will be copied; it also matches directories fi:
-    -f index.html` matches `path/index.html` but not `path/` and because of this `index.html` is not copied.
+    -f `index.html` matches `path/index.html` but not `path/` and because of this `index.html` is not copied.
 
 ## License
 
