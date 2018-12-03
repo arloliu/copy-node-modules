@@ -1,6 +1,6 @@
 .idea
-bin
-dist
-lib
-node_modules
+/bin
+/dist
+/lib
+/node_modules
 *.log
