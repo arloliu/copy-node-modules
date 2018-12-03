@@ -1,5 +1,8 @@
 # copy-node-modules - fast Node.js modules deployment to destination directory
 
+[![NPM version](https://img.shields.io/npm/v/copy-node-modules.svg)](https://www.npmjs.com/package/copy-node-modules)
+[![Downloads/month](https://img.shields.io/npm/dm/copy-node-modules.svg)](https://www.npmjs.com/package/copy-node-modules)
+
 Copy all modules listed in `dependencies` or/and `devDependencies` field of `package.json` to destination directory. 
 
 The procedure:
