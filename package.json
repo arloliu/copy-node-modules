@@ -1,6 +1,6 @@
 {
-  "name": "copy-node-modules",
-  "version": "1.1.1",
+  "name": "@stedi/copy-node-modules",
+  "version": "1.2.0",
   "description": "Fast Node.js modules deployment to destination directory",
   "main": "lib/index.js",
   "jsnext:main": "lib/index.es.js",
@@ -19,45 +19,42 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/arloliu/copy-node-modules"
+    "url": "git@github.com:Stedi/copy-node-modules.git"
   },
   "keywords": [
     "install",
     "deployment",
     "package"
   ],
-  "engine": {
-    "node": ">=6.0.0"
-  },
-  "author": "Arlo Liu <arlo.liu@gmail.com>",
+  "author": "Stedi Engineering",
   "license": "MIT",
   "dependencies": {
-    "async": "^2.6.1",
-    "graceful-fs": "^4.1.15",
-    "jsonfile": "^5.0.0",
-    "lodash.flatten": "^4.4.0",
-    "lodash.uniqwith": "^4.5.0",
-    "mkdirp": "^0.5.1",
-    "ncp": "^2.0.0",
-    "semver": "^5.6.0",
-    "yargs": "^16.0.3"
+    "async": "2.6.1",
+    "graceful-fs": "4.1.15",
+    "jsonfile": "5.0.0",
+    "lodash.flatten": "4.4.0",
+    "lodash.uniqwith": "4.5.0",
+    "mkdirp": "0.5.1",
+    "ncp": "2.0.0",
+    "semver": "5.6.0",
+    "yargs": "16.0.3"
   },
   "devDependencies": {
-    "@babel/cli": "^7.1.5",
-    "@babel/core": "^7.1.6",
-    "@babel/plugin-proposal-class-properties": "^7.1.0",
-    "@babel/plugin-proposal-json-strings": "^7.0.0",
-    "@babel/plugin-syntax-dynamic-import": "^7.0.0",
-    "@babel/plugin-syntax-import-meta": "^7.0.0",
-    "@babel/preset-env": "^7.1.6",
-    "@babel/register": "^7.0.0",
-    "babel-plugin-add-module-exports": "^1.0.0",
-    "chokidar": "^2.0.4",
-    "eslint": "^5.9.0",
-    "eslint-config-airbnb-base": "^13.1.0",
-    "eslint-plugin-import": "^2.14.0",
-    "rimraf": "^2.6.2",
-    "rollup": "^0.67.3",
-    "rollup-plugin-babel": "^4.0.3"
+    "@babel/cli": "7.1.5",
+    "@babel/core": "7.1.6",
+    "@babel/plugin-proposal-class-properties": "7.1.0",
+    "@babel/plugin-proposal-json-strings": "7.0.0",
+    "@babel/plugin-syntax-dynamic-import": "7.0.0",
+    "@babel/plugin-syntax-import-meta": "7.0.0",
+    "@babel/preset-env": "7.1.6",
+    "@babel/register": "7.0.0",
+    "babel-plugin-add-module-exports": "1.0.0",
+    "chokidar": "2.0.4",
+    "eslint": "5.9.0",
+    "eslint-config-airbnb-base": "13.1.0",
+    "eslint-plugin-import": "2.14.0",
+    "rimraf": "2.6.2",
+    "rollup": "0.67.3",
+    "rollup-plugin-babel": "4.0.3"
   }
 }
