@@ -32,7 +32,7 @@
   "author": "Arlo Liu <arlo.liu@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "async": "^2.6.1",
+    "async": "^3.2.2",
     "graceful-fs": "^4.1.15",
     "jsonfile": "^5.0.0",
     "lodash.flatten": "^4.4.0",
